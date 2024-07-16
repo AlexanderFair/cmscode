@@ -6,7 +6,10 @@ class Display():
         pygame.init()
         self.screen = pygame.display.set_mode((800, 800))
     
-    def draw_points(self, blue_pts, red_pts):
+    def draw_points(self, blue_pts, red_pts=[]):
+        blue_pts = [(p[0]/10, p[1]/10) for p in blue_pts]
+        red_pts = [(p[0]/10, p[1]/10) for p in red_pts]
+    
         self.screen.fill('white')
         for p in blue_pts:
             pygame.draw.circle(self.screen, "blue", p, 4)
@@ -16,6 +19,9 @@ class Display():
         sleep(1)
     
     def draw_pairing(self, blue_pts, red_pts):
+        blue_pts = [(p[0]/10, p[1]/10) for p in blue_pts]
+        red_pts = [(p[0]/10, p[1]/10) for p in red_pts]
+
         self.screen.fill('white')
         for p in blue_pts:
             pygame.draw.circle(self.screen, "blue", p, 4)
