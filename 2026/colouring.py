@@ -1,7 +1,7 @@
 from gen_planar import generate_planar_deg5_graph, generate_random_planar_graph
-from planar_draw import draw_planar_graph
+from planar_draw import Planar_Graph_Drawing
 import copy
-
+drawing = None
 # g a graph, v a node to delete
 # returns the graph obtained by deleting v (does not modify g)
 def delete_node(g, v):
@@ -49,6 +49,7 @@ def six_colour(g, colours):
   colours[v] = 1
   while colours[v] in used: colours[v] += 1
   assert colours[v] <= 6
+  drawing.update_colour(v, colours[v])
 
 def five_colour(g, colours):
   if not g: return
@@ -78,6 +79,8 @@ def five_colour(g, colours):
     h, vS = contract_nodes(g, {u,v,w})
     five_colour(h, colours)
     colours[u] = colours[w] = colours[vS]
+    drawing.update_colour(u, colours[vS])
+    drawing.update_colour(w, colours[vS])
     colours.pop(vS)
   
   # either case, we now have that v only sees <= 4 colours
@@ -92,9 +95,10 @@ def five_colour(g, colours):
 if __name__ == "__main__":
   g = generate_random_planar_graph(20)
   # g = generate_planar_deg5_graph(20)
-
+  drawing = Planar_Graph_Drawing(g)
   colours = {}
-  five_colour(g, colours)
+
+  six_colour(g, colours)
 
   # "planar" is guaranteed to be a planar drawing but
   # it can be a bit nasty
@@ -102,7 +106,7 @@ if __name__ == "__main__":
   # a "springs" routine to try and separate nodes, it might create crossings
 
   # draw_planar_graph(g, colours, "planar")
-  draw_planar_graph(g, colours, "spring")
+  # draw_planar_graph(g, colours, "spring")
 
 
   
