@@ -2,5 +2,6 @@ We can get them to run this command to do all of the set up (install the python 
 
 code --install-extension ms-python.python
     && pip install pygame
+    && pip install networkx
     && git clone https://github.com/AlexanderFair/cmscode.git
     && code cmscode
